@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summarization Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header, footer {
+            background-color: cornflowerblue;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .result-container {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+        .result-text p {
+            margin: 10px 0;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DL Project - Text Summarization</h1>
+    </header>
+    <div class="result-container">
+        <h2>Summarization Result</h2>
+        <div class="result-text">
+            <h3>Original Text:</h3>
+            <p>{{ user_input }}</p>
+            <h3>Summary in {{ selected_language_name }}:</h3>
+            <p id="summary">{{ summary }}</p>
+            
+            {% if selected_language_name.lower() in ['english', 'hindi'] %}
+                <button onclick="speakSummary()">Speak Summary</button>
+            {% endif %}
+        </div>
+    </div>
+    <footer>
+        <p>Group Members:</p>
+        <p>Kaustubh Bhavsar 202101040161 | Aditya Joshi 202101040132 | Nitesh Rajput 202101040121</p>
+    </footer>
+    <script>
+        function speakSummary() {
+            var summaryElement = document.getElementById('summary');
+            var summaryText = summaryElement.innerText;
+
+            var speechSynthesis = window.speechSynthesis;
+            var speechUtterance = new SpeechSynthesisUtterance(summaryText);
+
+            var selectedLanguage = '{{ selected_language_name|lower }}';
+            if (selectedLanguage === 'english') {
+                speechUtterance.lang = 'en-IN';
+            } else if (selectedLanguage === 'hindi') {
+                speechUtterance.lang = 'hi-IN';
+            }
+            speechUtterance.rate = 0.8; 
+
+            speechSynthesis.speak(speechUtterance);
+        }
+    </script>
+</body>
+</html>

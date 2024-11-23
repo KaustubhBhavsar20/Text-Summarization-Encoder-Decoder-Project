@@ -1,0 +1,8 @@
+flask
+tensorflow
+transformers
+rouge
+pickle-mixin
+gunicorn
+deep-translator
+sentencepiece
